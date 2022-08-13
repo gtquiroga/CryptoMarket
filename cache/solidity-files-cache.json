@@ -74,8 +74,8 @@
       ]
     },
     "/Users/gonzaloquiroga/Desktop/Code/bootcamp/blockchain-developer-bootcamp/contracts/Exchange.sol": {
-      "lastModificationDate": 1660382285763,
-      "contentHash": "787045e53811cfa40da6296379b1ed28",
+      "lastModificationDate": 1660385742028,
+      "contentHash": "830979a0ea9650e30c0f0cd4d6822cab",
       "sourceName": "contracts/Exchange.sol",
       "solcConfig": {
         "version": "0.8.9",
