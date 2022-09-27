@@ -7,11 +7,14 @@ import {
   loadNetwork,
   loadAccount,
   loadTokens,
-  loadExchange
+  loadExchange,
+  subscribeToEvents
 } from '../store/interactions.js'
 
 import Navbar from './Navbar';
 import Markets from './Markets';
+import Balance from './Balance';
+
 
 
 function App() {
@@ -36,7 +39,9 @@ function App() {
     
     await loadTokens(provider, [config[chainId].TKN.address, config[chainId].mETH.address], dispatch)
 
-    await loadExchange(provider, config[chainId].exchange.address, dispatch)
+    const exchange = await loadExchange(provider, config[chainId].exchange.address, dispatch)
+
+    subscribeToEvents(exchange, dispatch)
   }
 
   useEffect(() => {
@@ -55,7 +60,7 @@ function App() {
 
           <Markets />
 
-          {/* Balance */}
+          <Balance />
 
           {/* Order */}
 
