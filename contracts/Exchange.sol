@@ -33,7 +33,7 @@ contract Exchange {
         uint256 balance
     );
 
-    event Withraw(
+    event Withdraw(
         address token,
         address user,
         uint256 amount,
@@ -82,12 +82,12 @@ contract Exchange {
         emit Deposit(_token, msg.sender, _amount, tokens[_token][msg.sender]);
     }
 
-    function withrawToken(address _token, uint256 _amount) public {
+    function withdrawToken(address _token, uint256 _amount) public {
         require(tokens[_token][msg.sender] >= _amount);
 
         Token(_token).transfer(msg.sender, _amount);
         tokens[_token][msg.sender] = tokens[_token][msg.sender] - _amount;
-        emit Withraw(_token, msg.sender, _amount, tokens[_token][msg.sender]);
+        emit Withdraw(_token, msg.sender, _amount, tokens[_token][msg.sender]);
     }
 
     function balanceOf(address _token, address _user) public view returns(uint256){
