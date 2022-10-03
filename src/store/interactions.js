@@ -16,6 +16,25 @@ export const subscribeToEvents = (exchange, dispatch) => {
     })
 }
 
+export const loadAllOrders = async (provider, exchange, dispatch) => {
+    const block = await provider.getBlockNumber()
+
+    const cancelStream = await exchange.queryFilter('Cancel', 0, block)
+    const cancelledOrders = cancelStream.map(event => event.args)
+    
+    dispatch({ type: "CANCELLED_ORDERS_LOADED", cancelledOrders})
+
+    const tradeStream = await exchange.queryFilter('Trade', 0, block)
+    const filledOrders = tradeStream.map(event => event.args)
+    
+    dispatch({ type: "FILLED_ORDERS_LOADED", filledOrders})
+
+    const orderStream = await exchange.queryFilter('Order', 0, block)
+    const allOrders = orderStream.map(event => event.args)
+    
+    dispatch({ type: "ALL_ORDERS_LOADED", allOrders})
+}
+
 
 export const loadProvider = (dispatch) => {
     const connection = new ethers.providers.Web3Provider(window.ethereum)

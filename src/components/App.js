@@ -8,13 +8,15 @@ import {
   loadAccount,
   loadTokens,
   loadExchange,
-  subscribeToEvents
+  subscribeToEvents,
+  loadAllOrders
 } from '../store/interactions.js'
 
 import Navbar from './Navbar';
 import Markets from './Markets';
 import Balance from './Balance';
 import Order from './Order';
+import OrderBook from './OrderBook';
 
 
 
@@ -41,6 +43,8 @@ function App() {
     await loadTokens(provider, [config[chainId].TKN.address, config[chainId].mETH.address], dispatch)
 
     const exchange = await loadExchange(provider, config[chainId].exchange.address, dispatch)
+
+    loadAllOrders(provider, exchange, dispatch)
 
     subscribeToEvents(exchange, dispatch)
   }
@@ -75,6 +79,8 @@ function App() {
           {/* Trades */}
 
           {/* OrderBook */}
+
+          <OrderBook />
 
         </section>
       </main>
