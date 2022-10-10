@@ -86,7 +86,7 @@ describe('Exchange', () => {
         })
     })
 
-    describe('Withraw tokens', () => {
+    describe('Withdraw tokens', () => {
         let transaction, result
         const amount = tokens(10)
 
@@ -99,20 +99,20 @@ describe('Exchange', () => {
                 transaction = await exchange.connect(user1).depositToken(token1.address, amount)
                 result = await transaction.wait()
 
-                transaction = await exchange.connect(user1).withrawToken(token1.address, amount)
+                transaction = await exchange.connect(user1).withdrawToken(token1.address, amount)
                 result = await transaction.wait()
             })
     
 
-            it('withraws token funds', async () => {
+            it('withdraws token funds', async () => {
                 expect(await token1.balanceOf(exchange.address)).to.equal(0)
                 expect(await exchange.tokens(token1.address, user1.address)).to.equal(0)
                 expect(await exchange.balanceOf(token1.address, user1.address)).to.equal(0)
             })
 
-            it('emits Withraw event', async () => {
+            it('emits Withdraw event', async () => {
                 const event = result.events[1]
-                expect(event.event).to.equal('Withraw')
+                expect(event.event).to.equal('Withdraw')
     
                 const args = event.args
                 expect(args.token).to.equal(token1.address)
@@ -126,7 +126,7 @@ describe('Exchange', () => {
         describe('Failure', () => {
 
             it('fails when insufficient balance', async () => {
-                await expect(exchange.connect(user1).withrawToken(token1.address, amount)).to.be.reverted
+                await expect(exchange.connect(user1).withdrawToken(token1.address, amount)).to.be.reverted
             })
 
         })
