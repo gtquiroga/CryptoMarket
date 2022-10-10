@@ -70,10 +70,17 @@ const DEFAULT_EXCHANGE_STATE = {
     allOrders: {
         data: [],
         loaded: false
+    },
+    filledOrders: {
+        data: []
+    },
+    cancelledOrders: {
+        data: []
     }
 }
 
 export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
+    let index, data
     switch (action.type) {
         case 'EXCHANGE_LOADED':
             return {
@@ -145,6 +152,49 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
                 },
                 events: [action.event, ...state.events]
             }
+
+        case 'ORDER_FILL_REQUEST':
+            return {
+                ...state,
+                transaction: {
+                    transactionType: 'Fill Order',
+                    isPending: true,
+                    isSuccessful: false
+                }
+                
+            }
+        case 'ORDER_FILL_FAIL':
+            return {
+                ...state,
+                transaction: {
+                    transactionType: 'Fill Order',
+                    isPending: false,
+                    isSuccessful: false,
+                    isError: true
+                }
+                
+            }
+        case 'ORDER_FILL_SUCCESS':
+            index = state.filledOrders.data.findIndex(order => order.id.toString() === action.order.id.toString())
+
+            if(index === -1){
+                data = [...state.filledOrders.data, action.order]
+            }else{
+                data = state.filledOrders.data
+            }
+            return {
+                ...state,
+                transaction: {
+                    transactionType: 'Fill Order',
+                    isPending: false,
+                    isSuccessful: true
+                },
+                filledOrders: {
+                    ...state.filledOrders,
+                    data
+                },
+                events: [action.event, ...state.events]
+            }
         case 'EXCHANGE_TOKEN_1_BALANCE_LOADED':
             return {
                 ...state,
@@ -207,8 +257,8 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
                 }
             }
         case 'NEW_ORDER_SUCCESS':
-            let index = state.allOrders.data.findIndex(order => order.id.toString() === action.order.id.toString())
-            let data
+            index = state.allOrders.data.findIndex(order => order.id.toString() === action.order.id.toString())
+
             if(index === -1){
                 data = [...state.allOrders.data, action.order]
             }else{

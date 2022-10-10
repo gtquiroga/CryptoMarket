@@ -18,6 +18,10 @@ export const subscribeToEvents = (exchange, dispatch) => {
         const order = event.args
         dispatch({ type: 'ORDER_CANCEL_SUCCESS', order, event})
     })
+    exchange.on('Trade', (id, user, tokenGet, amountGet, tokenGive, amountGive, creator, timestamp, event) => {
+        const order = event.args
+        dispatch({ type: 'ORDER_FILL_SUCCESS', order, event})
+    })
 }
 
 export const loadAllOrders = async (provider, exchange, dispatch) => {
@@ -175,5 +179,18 @@ export const cancelOrder = async (provider, exchange, order, dispatch) => {
         await transaction.wait()
     } catch (error){
         dispatch({ type: 'ORDER_CANCEL_FAIL'})
+    }
+}
+
+export const fillOrder = async (provider, exchange, order, dispatch) => {
+    let transaction 
+
+    dispatch({ type: 'ORDER_FILL_REQUEST'})
+    try{
+        const signer = await provider.getSigner()
+        transaction = await exchange.connect(signer).fillOrder(order.id)
+        await transaction.wait()
+    } catch (error){
+        dispatch({ type: 'ORDER_FILL_FAIL'})
     }
 }
