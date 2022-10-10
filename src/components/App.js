@@ -20,6 +20,7 @@ import OrderBook from './OrderBook';
 import Trades from './Trades';
 import PriceChart from './PriceChart';
 import MyTransactions from './MyTransactions';
+import Alert from './Alert';
 
 
 
@@ -81,14 +82,12 @@ function App() {
 
           <Trades />
 
-          {/* OrderBook */}
-
           <OrderBook />
 
         </section>
       </main>
+      <Alert />
 
-      {/* Alert */}
 
     </div>
   );
