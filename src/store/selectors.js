@@ -125,18 +125,18 @@ export const priceChartSelector = createSelector(filledOrders, tokens, (orders, 
 })
 
 const buildGraphData = (orders) => {
-    orders = groupBy(orders, (o) => moment.unix(o.timestamp).startOf('hour').format())
-    const hours = Object.keys(orders)
+    orders = groupBy(orders, (o) => moment.unix(o.timestamp).startOf('day').format())
+    const days = Object.keys(orders)
 
-    const graphData = hours.map((hour) => {
-        const group = orders[hour]
+    const graphData = days.map((day) => {
+        const group = orders[day]
         const open = group[0]
         const high = maxBy(group, 'tokenPrice')
         const low = minBy(group, 'tokenPrice')
         const close = group[group.length - 1]
 
         return({
-            x: new Date(hour),
+            x: new Date(day).toLocaleDateString("en-US", {year: 'numeric', month: 'short', day: 'numeric'}),
             y: [open.tokenPrice, high.tokenPrice, low.tokenPrice, close.tokenPrice]
         })
     })

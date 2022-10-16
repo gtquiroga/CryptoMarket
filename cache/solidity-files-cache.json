@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/gonzaloquiroga/Desktop/Code/bootcamp/blockchain-developer-bootcamp/contracts/Token.sol": {
-      "lastModificationDate": 1660228528592,
-      "contentHash": "1ba1c189cd666750765926c605b52060",
+      "lastModificationDate": 1665757729992,
+      "contentHash": "4711e63559a949b52fce33f22db9815a",
       "sourceName": "contracts/Token.sol",
       "solcConfig": {
         "version": "0.8.9",
@@ -74,7 +74,7 @@
       ]
     },
     "/Users/gonzaloquiroga/Desktop/Code/bootcamp/blockchain-developer-bootcamp/contracts/Exchange.sol": {
-      "lastModificationDate": 1664238487032,
+      "lastModificationDate": 1665435666721,
       "contentHash": "a4217707640e6334f30e929c6de435df",
       "sourceName": "contracts/Exchange.sol",
       "solcConfig": {

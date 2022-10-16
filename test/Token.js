@@ -22,6 +22,8 @@ describe('Token', () => {
         const symbol = 'TKN'
         const decimals = '18'
         const totalSupply = tokens(1000000)
+        const amount = tokens(1000)
+        const contractAmount = tokens(999000)
 
         it('has correct name', async () => {
             expect(await token.name()).to.equal(name)
@@ -40,9 +42,55 @@ describe('Token', () => {
             expect(await token.totalSupply()).to.equal(totalSupply)
         })
 
-        it('assing totalSupply to deployer', async () => {
-            expect(await token.balanceOf(deployer.address)).to.equal(totalSupply)
+        it('assing totalSupply/1000 to deployer', async () => {
+            expect(await token.balanceOf(deployer.address)).to.equal(amount)
         })
+
+        it('assing correct supply to contrat', async () => {
+            expect(await token.balanceOf(token.address)).to.equal(contractAmount)
+        })
+    })
+
+    describe('Claim free tokens', async () => {
+        let amount, transaction, result
+
+        describe('Success', () => {
+            beforeEach(async () => {
+                token_balance = await token.balanceOf(token.address)
+                receiver_balance = await token.balanceOf(receiver.address)
+                token_balance = BigInt(token_balance) - BigInt(tokens(100))
+                receiver_balance =  BigInt(receiver_balance) + BigInt(tokens(100)) 
+            })
+    
+            it('Balance change correctly', async () => {
+                expect(await token.freeTokensClaimed(receiver.address)).to.equal(false)
+
+                transaction = await token.connect(receiver).freeTokens()
+                result = await transaction.wait()
+
+                expect(await token.freeTokensClaimed(receiver.address)).to.equal(true)
+                expect(await token.balanceOf(token.address)).to.equal(token_balance)
+                expect(await token.balanceOf(receiver.address)).to.equal(receiver_balance)
+            })
+    
+           
+        })
+
+        describe('Failure', () => {
+            beforeEach(async () => {
+                transaction = await token.connect(receiver).freeTokens()
+                result = await transaction.wait()
+            })
+
+            it('Cannont claim free tokens twice', async () => {
+                expect(await token.freeTokensClaimed(receiver.address)).to.equal(true)
+
+                await expect(token.connect(receiver).freeTokens()).to.be.reverted
+            })
+           
+        })
+
+        
     })
 
     describe('Sending tokens', async () => {
@@ -56,7 +104,7 @@ describe('Token', () => {
             })
     
             it('transfer token balance', async () => {
-                expect(await token.balanceOf(deployer.address)).to.equal(tokens('999900'))
+                expect(await token.balanceOf(deployer.address)).to.equal(tokens('900'))
                 expect(await token.balanceOf(receiver.address)).to.equal(amount)
             })
     
@@ -137,7 +185,7 @@ describe('Token', () => {
             })
 
             it('transfer balance tokens', async () => {
-                expect(await token.balanceOf(deployer.address)).to.be.equal(tokens(999900))
+                expect(await token.balanceOf(deployer.address)).to.be.equal(tokens(900))
                 expect(await token.balanceOf(receiver.address)).to.be.equal(amount)
             })
 

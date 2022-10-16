@@ -28,7 +28,9 @@ export const provider = (state = {}, action) => {
 const DEFAULT_TOKENS_STATE = {
     loaded: false,
     contracts: [],
-    symbols: []
+    symbols: [],
+    tokens: [],
+    claimInProgress: false
 }
 
 export const tokens = (state = DEFAULT_TOKENS_STATE, action) => {
@@ -57,6 +59,43 @@ export const tokens = (state = DEFAULT_TOKENS_STATE, action) => {
                 ...state,
                 balances: [...state.balances, action.balance]
             }
+        case 'ACCOUNT_TOKENS_LOADED':
+            return {
+                ...state,
+                tokens: action.tokens
+            }
+        case 'TOKEN_CLAIM_REQUEST':
+            return {
+                ...state,
+                transaction: {
+                    transactionType: 'Claim',
+                    isPending: true,
+                    isSuccessful: false
+                },
+                claimInProgress: true
+            }
+        case 'TOKEN_CLAIM_SUCCESS':
+            return {
+                ...state,
+                transaction: {
+                    transactionType: 'Claim',
+                    isPending: false,
+                    isSuccessful: true
+                },
+                claimInProgress: false
+            }
+        case 'TOKEN_CLAIM_SUCCESS':
+            return {
+                ...state,
+                transaction: {
+                    transactionType: 'Claim',
+                    isPending: false,
+                    isSuccessful: false,
+                    isError: true,
+                },
+                claimInProgress: false
+            }
+            
         default:
             return state
     }

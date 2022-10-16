@@ -1,17 +1,19 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { loadAccount } from '../store/interactions.js'
-import Blockies from 'react-blockies';
-import logo from '../assets/logo.png';
-import eth from '../assets/eth.svg';
-
 import config from '../config.json';
+import { useDispatch, useSelector } from 'react-redux';
+import {  NavLink } from 'react-router-dom';
+import Blockies from 'react-blockies';
+import { loadAccount } from '../store/interactions.js'
+import logo from '../assets/logo.png';
+import { XMarkIcon,Bars3BottomLeftIcon, Bars3Icon } from '@heroicons/react/24/solid'
+import { useRef } from 'react';
 
 
 const Navbar = () => {
     const account = useSelector(state => state.provider.account)
-    const balance = useSelector(state => state.provider.balance)
     const chainId = useSelector(state => state.provider.chainId)
     const provider = useSelector(state => state.provider.connection)
+    const menuRef = useRef(null)
+    const coverRef = useRef(null)
 
     const dispatch = useDispatch()
 
@@ -19,34 +21,38 @@ const Navbar = () => {
         await loadAccount(provider, dispatch)
     }
 
-    const networkHandler = async (e) => {
-        await window.ethereum.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: e.target.value }]
-        })
+    const toggleMenu = () => {
+        if(menuRef.current.className ===  'menu__hidde'){
+            menuRef.current.className = 'menu'
+            coverRef.current.className = 'menu__cover'
+        }else{
+            menuRef.current.className = 'menu__hidde'
+            coverRef.current.className = 'menu__hidde'
+        }
     }
 
-    return(
-      <div className='exchange__header grid'>
-        <div className='exchange__header--brand flex'>
-            <img src={logo} className='logo' alt='TKN'></img>
-            <h1>TKN Exchange</h1>
-        </div>
   
-        <div className='exchange__header--networks flex'>
-            <img src={eth} className='Eth Logo' alt='ETH Logo'></img>
-            {chainId && (
-                <select name='networks' id='networks' value={config[chainId] ? `0x${chainId.toString(16)}` : '0'} onChange={networkHandler}>
-                    <option value='0' disabled>Select Network</option>
-                    <option value='0x7A69' >Localhost</option>
-                    <option value='0x5' >Goerli</option>
-                </select>
-            )}
-            
+  return (
+    <div className='navbar'>
+        <div className='menu__hidde' onClick={toggleMenu} ref={coverRef}></div>
+        <div className='menu__hidde' ref={menuRef}>
+            <div className='menu__top'>
+                <XMarkIcon className='menu__x' onClick={toggleMenu}/>
+            </div>
+            <NavLink className='menu__option' to="/" onClick={toggleMenu}>Home</NavLink>
+            <NavLink className='menu__option' to="/exchange" onClick={toggleMenu}>Exchange</NavLink>
+            <NavLink className='menu__option' to="/tokens" onClick={toggleMenu}>Tokens</NavLink>
         </div>
-  
-        <div className='exchange__header--account flex'>
-            <p><small>My Balance</small>{balance ? Number(balance).toFixed(4) : 0} ETH</p>
+        <Bars3Icon className='menu__button' onClick={toggleMenu}/>
+        <div className='navbar__options'>
+            <NavLink to="/" className='navbar__logo flex'>
+                <img src={logo} className='logo' alt='TKN'></img>
+                <h1>Crypto Market</h1>
+            </NavLink>
+            <NavLink className={({ isActive }) => (isActive ? 'navbar__link__active' : 'navbar__link')} to="/exchange">Exchange</NavLink>
+            <NavLink className={({ isActive }) => (isActive ? 'navbar__link__active' : 'navbar__link')} to="/tokens">Tokens</NavLink>
+        </div>
+        <div className='account flex'>
             {account ? (
                 <a 
                     href={config[chainId] ? `${config[chainId].explorerURL}/address/${account}` : '#'}
@@ -68,8 +74,9 @@ const Navbar = () => {
                 <button className='button' onClick={connectHandler}>Connect Wallet</button>
             )}
         </div>
-      </div>
-    )
-  }
-  
-  export default Navbar;
+    </div>
+
+  );
+}
+
+export default Navbar;
