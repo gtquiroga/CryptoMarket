@@ -1,17 +1,3 @@
-import { useEffect } from 'react';
-import config from '../config.json';
-import { useDispatch } from 'react-redux';
-
-import { 
-  loadProvider,
-  loadNetwork,
-  loadAccount,
-  loadTokens,
-  loadExchange,
-  subscribeToEvents,
-  loadAllOrders
-} from '../store/interactions.js'
-
 import ExhangeNavbar from '../components/ExhangeNavbar';
 import Markets from '../components/Markets';
 import Balance from '../components/Balance';
