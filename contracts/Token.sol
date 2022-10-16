@@ -11,6 +11,7 @@ contract Token {
 
     mapping(address => uint256) public balanceOf;
     mapping(address => mapping(address => uint256)) public allowance;
+    mapping(address => bool) public freeTokensClaimed;
 
     event Transfer(
         address indexed from,
@@ -28,7 +29,8 @@ contract Token {
         name = _name;
         symbol = _symbol;
         totalSupply = _totalSupply * (10**decimals);
-        balanceOf[msg.sender] = totalSupply;
+        balanceOf[msg.sender] = 1000 * (10**decimals);
+        balanceOf[address(this)] = totalSupply - balanceOf[msg.sender];
     }
 
     function _transfer(address _from, address _to, uint256 _value) internal {
@@ -63,6 +65,17 @@ contract Token {
         allowance[_from][msg.sender] = allowance[_from][msg.sender] - _value;
 
         _transfer(_from, _to, _value);
+
+        return true;
+    }
+
+    function freeTokens() public returns(bool succes){
+        require(freeTokensClaimed[msg.sender] == false, 'had already claimed free tokens');
+        require(balanceOf[address(this)] >= 100, 'No mmore free tokens left');
+
+        _transfer(address(this), msg.sender, 100 * (10**decimals));
+
+        freeTokensClaimed[msg.sender] = true;
 
         return true;
     }

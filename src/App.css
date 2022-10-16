@@ -120,6 +120,309 @@ small {
 }
 
 /* ------------------------------------------------------ */
+/* Navbar */
+
+.menu{
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  z-index: 90;
+  width: 100%;
+  background-color: #040811;
+  height: fit-content;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.menu__cover{
+  z-index: 50;
+  width: 100%;
+  background-color: #232527;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0.7;
+}
+
+.menu__hidde{
+  display: none;
+}
+
+
+
+.menu__x{
+  width: 35px;
+  height: auto;
+  top: 10px;
+  right: 10px;
+}
+
+.menu__button {
+  width: 35px;
+  height: auto;
+  margin: 0 0.5em 0 0;
+  cursor: pointer;
+}
+
+.menu__button:hover{
+  color: #2187D0;
+}
+
+.menu__x:hover{
+  color: #2187D0;
+  border: 1px solid #2187D0;
+  border-radius: 8px;
+}
+
+.menu__option{
+  font-size: large;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  color: white;
+  width: 100%;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.menu__option:hover{
+  color: #2187D0;
+  background-color: #0D121D;
+}
+
+.menu__top{
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  padding: 18px;
+  padding-bottom: 0px;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  justify-content: start;
+  padding-inline: 40px;
+  height: 80px;
+  background-color: #040811;
+}
+
+
+.navbar2 {
+  width: 100%;
+  background-color: #040811;
+}
+
+.navbar__options{
+  display: none;
+  flex-direction: row;
+  justify-content: start;
+  width: 100%;
+}
+
+.navbar__link{
+  margin-right: 20px;
+  font-size: large;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+  width: 150px;
+  border-radius: 30px;
+  border-width: 1px;
+  border-color: rgb(97, 88, 88);
+  border-style: solid;
+}
+
+.navbar__logo{
+  text-decoration: none;
+  color: white;
+  font-size: x-large;
+  font-weight: bold;
+  margin-right: 60px;
+}
+
+.navbar__link:hover{
+  border-color: #2187D0;
+  color: #2187D0;
+}
+.navbar__link__active{
+  margin-right: 20px;
+  font-size: large;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 10px;
+  width: 150px;
+  border-radius: 30px;
+  border-width: 1px;
+  color: white;
+  background-color: #2187D0;
+  border-color: #2187D0;
+  border-style: solid;
+}
+
+/* ------------------------------------------------------ */
+/* Exchange Header */
+.disclaimer{
+  max-width: 800px;
+  margin-top: 60px;
+  text-align: center;
+}
+
+.wallet__required{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wallet__required h2{
+  font-size: xx-large;
+}
+ 
+.wallet__required p{
+  color: #a11e45;
+}
+
+.landing{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  padding: 50px;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  background: var(--clr-primary);
+}
+
+.landing_buttons{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+}
+
+.landing__button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  font-size: x-large;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+  width: 300px;
+  height: 100px;
+  border-radius: 30px;
+  border-width: 1px;
+  border-color: rgb(97, 88, 88);
+  border-style: solid;
+  background-color: #F7AB0A;
+  opacity: 0.8;
+  margin-bottom: 20px;
+}
+
+.landing p{
+  font-size: large;
+  margin-bottom: 30px;
+}
+
+.landing h1{
+  font-size: 1cm;
+  color: #ffffff;
+  font-weight: bolder;
+  letter-spacing: 10px;
+  margin-bottom: 50px;
+}
+
+.landing__button:hover{
+  background-color: #F7AB0A;
+  opacity: 1;
+}
+
+/* ------------------------------------------------------ */
+/* Tokens */
+
+.token{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  margin: 20px;
+  padding: 0px;
+  border-radius: 20px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #252a33;
+}
+
+.token__header{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  text-align: center;
+  border-width: 0px;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: #252a33;
+  padding: 10px;
+  height: 50px;
+}
+
+.token p{
+  color: #8b8d90;
+  margin-right: 20px;
+}
+
+.token h3{
+  margin-left: 20px;
+}
+
+.button_active{
+  background-color: #F7AB0A;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.button_active:hover{
+  opacity: 1;
+}
+
+.button_deactive{
+  background-color: #63666a;
+}
+
+.token button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  font-size: x-large;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+  width: 300px;
+  height: 50px;
+  border-radius: 30px;
+  border-width: 1px;
+  border-color: rgb(97, 88, 88);
+  border-style: solid;
+  opacity: 0.8;
+}
+
+/* ------------------------------------------------------ */
 /* Exchange Header */
 
 .exchange__header {
@@ -159,6 +462,7 @@ small {
   display: none;
 }
 
+
 .exchange__header--networks {
   grid-column-start: 12;
   grid-column-end: 13;
@@ -171,6 +475,15 @@ small {
   transform: translate(0, -50%);
 }
 
+.account{
+  width: fit-content;
+  background: var(--clr-secondary);
+  border-radius: 10px;
+  right: 24px;
+  position: absolute;
+  
+}
+
 .exchange__header--account {
   background: var(--clr-secondary);
 
@@ -179,7 +492,7 @@ small {
   right: 24px;
   transform: translate(0, -50%);
 
-  width: 400px;
+  width: 380px;
   height: 48px;
 
   border-radius: 10px;
@@ -191,9 +504,12 @@ small {
 .exchange__header--account p {
   margin: 0 auto;
 }
+.account p {
+  margin: 0 auto;
+}
 
-.exchange__header--account a,
-.exchange__header--account button {
+.account a,
+.account button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -214,12 +530,12 @@ small {
   transition: all 250ms ease;
 }
 
-.exchange__header--account button:hover {
+.account button:hover {
   background: var(--clr-blue);
   border: none;
 }
 
-.exchange__header--account img {
+.account img {
   width: 32px;
   height: auto;
   margin: 0 0 0 0.75em;
@@ -653,6 +969,14 @@ table td {
 }
 
 @media screen and (min-width: 768px) {
+  .landing_buttons{
+    flex-direction: row;
+  }
+
+  .token button{
+    width: 400px;
+  }
+  
   .exchange__header--brand {
     grid-column-start: 1;
     grid-column-end: 4;
@@ -705,6 +1029,18 @@ table td {
 }
 
 @media screen and (min-width: 992px) {
+  .menu__button{
+    display: none;
+  }
+
+  .navbar__options{
+    display: flex;
+  }
+
+  .token button{
+    width: 600px;
+  }
+
   .exchange__header--brand {
     grid-column-start: 1;
     grid-column-end: 5;

@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import config from '../config.json';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Routes, Link, NavLink } from 'react-router-dom';
+import Exchange from '../routs/Exchange';
 
 import { 
   loadProvider,
@@ -12,20 +14,15 @@ import {
   loadAllOrders
 } from '../store/interactions.js'
 
+
 import Navbar from './Navbar';
-import Markets from './Markets';
-import Balance from './Balance';
-import Order from './Order';
-import OrderBook from './OrderBook';
-import Trades from './Trades';
-import PriceChart from './PriceChart';
-import MyTransactions from './MyTransactions';
-import Alert from './Alert';
+import Home from '../routs/Home';
+import Tokens from '../routs/Tokens';
+
 
 
 
 function App() {
-
   const dispatch = useDispatch()
 
   const laodBlockchainData = async () => {
@@ -55,40 +52,17 @@ function App() {
 
   useEffect(() => {
     laodBlockchainData()
-  })
-
+  })  
   
   return (
     <div>
 
-      {/* Navbar */}
-      <Navbar />
-
-      <main className='exchange grid'>
-        <section className='exchange__section--left grid'>
-
-          <Markets />
-
-          <Balance />
-
-          <Order />
-
-        </section>
-        <section className='exchange__section--right grid'>
-
-          <PriceChart />
-
-          <MyTransactions />
-
-          <Trades />
-
-          <OrderBook />
-
-        </section>
-      </main>
-      <Alert />
-
-
+      <Navbar/>
+        <Routes>
+          <Route exact path="/" element={<Home/>}/>
+          <Route exact path="/exchange" element={<Exchange/>}/>
+          <Route exact path="/tokens" element={<Tokens/>}/>
+        </Routes>
     </div>
   );
 }

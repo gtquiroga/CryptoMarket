@@ -71,6 +71,21 @@ export const loadAccount = async (provider, dispatch) => {
     return account
 }
 
+export const loadAccountTokens = async (provider, account, addresses, dispatch) => {
+    let token, symbol, balance, allowClaim
+    let tokens = []
+    for(let i = 0; i < addresses.length; i++){
+        token = new ethers.Contract(addresses[i], TOKEN_ABI, provider)
+        symbol = await token.symbol()
+        balance =  ethers.utils.formatUnits(await token.balanceOf(account), 18)
+        allowClaim = !(await token.freeTokensClaimed(account))
+        tokens.push({contract: token, symbol, balance, allowClaim})
+    }
+
+    dispatch({type: 'ACCOUNT_TOKENS_LOADED', tokens})
+
+}
+
 export const loadTokens = async (provider, addresses, dispatch) => {
     let token, symbol
 
@@ -192,5 +207,19 @@ export const fillOrder = async (provider, exchange, order, dispatch) => {
         await transaction.wait()
     } catch (error){
         dispatch({ type: 'ORDER_FILL_FAIL'})
+    }
+}
+
+export const claimTokens = async (provider, token, dispatch) => {
+    let transaction 
+
+    dispatch({ type: 'TOKEN_CLAIM_REQUEST'})
+    try{
+        const signer = await provider.getSigner()
+        transaction = await token.connect(signer).freeTokens()
+        await transaction.wait()
+        dispatch({ type: 'TOKEN_CLAIM_SUCCESS'})
+    } catch (error){
+        dispatch({ type: 'TOKEN_CLAIM_FAIL'})
     }
 }

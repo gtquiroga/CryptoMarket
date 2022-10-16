@@ -4,15 +4,15 @@ async function main() {
 
   const accounts = await ethers.getSigners()
 
-  const tkn = await  Token.deploy('My Token', 'TKN', '1000000')
+  const tkn = await  Token.deploy('My Token', 'mTKN', '10000000')
   await tkn.deployed();
-  console.log(`TKN deploy to : ${tkn.address}`)
+  console.log(`mTKN deploy to : ${tkn.address}`)
 
-  const mETH = await  Token.deploy('Mock ETH', 'mETH', '1000000')
+  const mETH = await  Token.deploy('Mock ETH', 'mETH', '10000000')
   await mETH.deployed();
   console.log(`mETH deploy to : ${mETH.address}`)
 
-  const mDAI = await  Token.deploy('Mock DAI', 'mDAI', '1000000')
+  const mDAI = await  Token.deploy('Mock DAI', 'mDAI', '10000000')
   await mDAI.deployed();
   console.log(`mDAI deploy to : ${mDAI.address}`)
 
